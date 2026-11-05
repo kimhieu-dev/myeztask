@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyEzTask</title>
+  <script>
+    /* Apply the saved theme before first paint so the page never flashes the wrong mode. */
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("myeztask-theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='vendor/htmx.min.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <h1 class="brand">MyEzTask</h1>
+      <button type="button" class="btn ghost" id="theme-toggle">Dark mode</button>
+    </header>
+
+    {% include "partials/tabs.html" %}
+
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <div id="modal-slot"></div>
+</body>
+</html>

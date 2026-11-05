@@ -1,0 +1,35 @@
+<section id="task-list" class="task-list" data-view="{{ view }}" data-page="{{ page }}" data-total="{{ total }}">
+  {% if tasks %}
+    <ul class="rows">
+      {% for task in tasks %}
+        <li class="row{% if view == 'done' %} is-done{% endif %}" data-id="{{ task.id }}" tabindex="0">
+          <span class="row-title">{{ task.title }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty">
+      {% if view == 'done' %}Nothing finished yet.{% else %}Nothing in the pool. Press Add when you want to drop a task in.{% endif %}
+    </p>
+  {% endif %}
+
+  {% if pages > 1 %}
+    <nav class="pager" aria-label="Pages">
+      {% if page > 1 %}
+        <a class="btn" href="/{{ view }}?page={{ page - 1 }}"
+           hx-get="/{{ view }}?page={{ page - 1 }}" hx-target="#main" hx-push-url="true">Previous</a>
+      {% else %}
+        <span class="btn is-off">Previous</span>
+      {% endif %}
+
+      <span class="page-info">Page {{ page }} of {{ pages }}</span>
+
+      {% if page < pages %}
+        <a class="btn" href="/{{ view }}?page={{ page + 1 }}"
+           hx-get="/{{ view }}?page={{ page + 1 }}" hx-target="#main" hx-push-url="true">Next</a>
+      {% else %}
+        <span class="btn is-off">Next</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+</section>

@@ -1,0 +1,360 @@
+/* MyEzTask: minimal, calm, low-distraction. Colors are tokens; dark mode swaps them. */
+
+:root {
+  --bg: #f6f6f4;
+  --surface: #ffffff;
+  --surface-hover: #f0f2f6;
+  --text: #1c1e21;
+  --muted: #666b73;
+  --border: #e2e2dd;
+  --accent: #2f6fdb;
+  --accent-fg: #ffffff;
+  --accent-soft: #e4edfb;
+  --danger: #b93a33;
+  --danger-fg: #ffffff;
+  --focus: #2f6fdb;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  --radius: 10px;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #15171a;
+  --surface: #1c1f23;
+  --surface-hover: #242830;
+  --text: #e6e8eb;
+  --muted: #9aa1ab;
+  --border: #2c3036;
+  --accent: #7ea8ff;
+  --accent-fg: #101622;
+  --accent-soft: #223252;
+  --danger: #ff8d85;
+  --danger-fg: #2a0e0c;
+  --focus: #7ea8ff;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Readable system sans at a moderate size, with airy line spacing. */
+  font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 56px;
+}
+
+/* Header */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  margin: 20px 0 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: -1px;
+  margin-right: 16px;
+  padding: 10px 2px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.is-active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.count {
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--border);
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.btn:disabled,
+.btn.is-off {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.btn.primary:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.btn.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: var(--danger-fg);
+}
+
+.btn.danger:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.btn.danger-soft {
+  color: var(--danger);
+}
+
+.btn.ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.btn.ghost:hover:not(:disabled) {
+  background: transparent;
+  color: var(--text);
+}
+
+/* Toolbar and hint */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hint {
+  margin: 12px 0 10px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* Task list */
+
+.rows {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.row {
+  padding: 14px 16px 14px 13px;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  user-select: none;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover {
+  background: var(--surface-hover);
+}
+
+.row:focus-visible {
+  outline-offset: -2px;
+}
+
+.row.is-selected {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+
+.row.is-done {
+  color: var(--muted);
+}
+
+.row.is-done .row-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.empty {
+  margin: 0;
+  padding: 40px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Pager */
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.page-info {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* Modals */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.35);
+  animation: fade-in 0.15s ease-out;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.modal-title {
+  margin: 0 0 10px;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.modal-text {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.error {
+  margin: 8px 0 0;
+  color: var(--danger);
+  font-size: 0.9375rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* Motion and small screens */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .toolbar .btn {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

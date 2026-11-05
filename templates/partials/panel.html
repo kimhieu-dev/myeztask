@@ -1,0 +1,19 @@
+<section class="panel" aria-label="{{ 'Completed tasks' if view == 'done' else 'Task pool' }}">
+  <div class="toolbar">
+    {% if view == 'home' %}
+      <button type="button" class="btn primary" data-action="add">Add</button>
+      <button type="button" class="btn" data-action="edit" data-requires-selection disabled>Edit</button>
+      <button type="button" class="btn" data-action="complete" data-requires-selection disabled>Mark done</button>
+      <button type="button" class="btn danger-soft" data-action="delete" data-requires-selection disabled>Delete</button>
+    {% else %}
+      <button type="button" class="btn danger-soft" data-action="delete" data-requires-selection disabled>Delete</button>
+      <button type="button" class="btn danger" data-action="clear-done"{% if total == 0 %} disabled{% endif %}>Delete all</button>
+    {% endif %}
+  </div>
+
+  <p class="hint">
+    {% if view == 'home' %}Click a task to select it. Double-click to edit.{% else %}Click a task to select it.{% endif %}
+  </p>
+
+  {% include "partials/task_list.html" %}
+</section>

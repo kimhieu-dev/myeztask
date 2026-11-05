@@ -1,0 +1,14 @@
+<nav id="tabs" class="tabs" aria-label="Views" hx-swap-oob="true">
+  <a href="/home"
+     class="tab{% if view == 'home' %} is-active{% endif %}"
+     hx-get="/home" hx-target="#main" hx-push-url="true"
+     {% if view == 'home' %}aria-current="page"{% endif %}>
+    Home <span class="count">{{ counts.home }}</span>
+  </a>
+  <a href="/done"
+     class="tab{% if view == 'done' %} is-active{% endif %}"
+     hx-get="/done" hx-target="#main" hx-push-url="true"
+     {% if view == 'done' %}aria-current="page"{% endif %}>
+    Done <span class="count">{{ counts.done }}</span>
+  </a>
+</nav>

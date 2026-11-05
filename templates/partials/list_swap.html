@@ -1,0 +1,4 @@
+{# Response for add / edit / complete / delete: refreshes the list, the tab counts, and closes any modal. #}
+{% include "partials/tabs.html" %}
+{% include "partials/task_list.html" %}
+<div id="modal-slot" hx-swap-oob="true"></div>

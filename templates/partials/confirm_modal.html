@@ -1,0 +1,29 @@
+<div class="backdrop">
+  <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-text">
+    {% if scope == 'done' %}
+      <h2 class="modal-title" id="modal-title">Delete all completed tasks?</h2>
+      <p class="modal-text" id="modal-text">
+        {% if count == 0 %}
+          There are no completed tasks to delete.
+        {% else %}
+          This permanently removes {{ count }} completed task{{ '' if count == 1 else 's' }}. It cannot be undone.
+        {% endif %}
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" data-close autofocus>Cancel</button>
+        {% if count %}
+          <button type="button" class="btn danger"
+                  hx-delete="/tasks/done?{{ qs }}" hx-target="#task-list" hx-swap="outerHTML">Delete all</button>
+        {% endif %}
+      </div>
+    {% else %}
+      <h2 class="modal-title" id="modal-title">Delete this task?</h2>
+      <p class="modal-text" id="modal-text">&ldquo;{{ title }}&rdquo; will be permanently removed. It cannot be undone.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" data-close autofocus>Cancel</button>
+        <button type="button" class="btn danger"
+                hx-delete="/tasks/{{ task_id }}?{{ qs }}" hx-target="#task-list" hx-swap="outerHTML">Delete</button>
+      </div>
+    {% endif %}
+  </div>
+</div>
